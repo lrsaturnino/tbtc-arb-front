@@ -39,7 +39,7 @@ const HomeHeader: FC = () => {
 						lineHeight={{ xl: '84px' }}
 						fontWeight={900}
 					>
-						Bitcoin on Arbitrum
+						Bitcoin on Base
 					</Text>
 					<Text
 						fontSize='24px'

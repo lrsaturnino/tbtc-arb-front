@@ -18,7 +18,7 @@ import { RootState } from '../../../../../../types/RootState';
 
 const TransactionHistory = () => {
 	const gradientColor = 'linear(to-r, #B62CFF,#7D00FF )';
-	const { utxo, arbTxHash, initializedEthTxHash, finalizedEthTxHash } =
+	const { utxo, baseTxHash, initializedEthTxHash, finalizedEthTxHash } =
 		useSelector((state: RootState) => state.deposit);
 	const [activeIndex, setActiveIndex] = useState(0);
 	const { chainId, isConnected } = useWeb3ModalAccount();
@@ -72,11 +72,11 @@ const TransactionHistory = () => {
 						blockExplorer='BITCOIN'
 					/>
 				)}
-				{arbTxHash && (
+				{baseTxHash && (
 					<TransactionsInfoTransactionHistoryComponent
 						isMainnet={isMainnet}
-						txHash={arbTxHash}
-						blockExplorer='ARBISCAN'
+						txHash={baseTxHash}
+						blockExplorer='BASESCAN'
 					/>
 				)}
 				{initializedEthTxHash && (

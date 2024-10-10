@@ -30,7 +30,7 @@ const initiateSDK = async (data: InfoAccount): Promise<TBTC> => {
 		sdk = isMainnet
 			? await TBTC.initializeMainnet(ethProvider, true)
 			: await TBTC.initializeSepolia(ethProvider, true);
-		await sdk.initializeCrossChain('Arbitrum', signer);
+		await sdk.initializeCrossChain('Base', signer);
 	}
 
 	if (!sdk) throw new Error('SDK not initialized yet.');

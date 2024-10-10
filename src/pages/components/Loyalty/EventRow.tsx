@@ -25,7 +25,7 @@ interface EventRowProps {
 	isSmallScreen: boolean;
 }
 
-const arbscanBaseUrl = 'https://arbiscan.io';
+const basescanBaseUrl = 'https://sepolia.basescan.org/';
 
 /**
  * @name EventRow
@@ -101,7 +101,7 @@ const EventRow: React.FC<EventRowProps> = ({ event, isSmallScreen }) => {
 			{!isSmallScreen && (
 				<Tooltip label={transactionHash} fontSize='xs'>
 					<Link
-						href={`${arbscanBaseUrl}/tx/${transactionHash}`}
+						href={`${basescanBaseUrl}/tx/${transactionHash}`}
 						isExternal
 					>
 						<Flex alignItems='center' gap={1.5}>

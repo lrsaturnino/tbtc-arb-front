@@ -120,7 +120,7 @@ const Step1MintingProcess = ({
 						</Tooltip>
 					</Flex>
 					<Input
-						name='ArbitrumAdress'
+						name='BaseAdress'
 						value={address ? address : 'Loading...'}
 						readOnly
 					/>

@@ -18,7 +18,7 @@ import { RootState } from '../../../../../../types/RootState';
 import { useSdk } from '../../../../../../context/SDKProvider';
 import { checkDepositStatus } from '../../../../../../services/depositServices';
 import {
-	addArbTxHash,
+	addBaseTxHash,
 	addStatus,
 } from '../../../../../../redux/reducers/DepositReducer';
 import { Deposit, TBTC } from '@keep-network/tbtc-v2.ts';
@@ -104,10 +104,10 @@ const Step3MintingProcess = ({ setStep }: Props) => {
 		try {
 			const fundingUxtos = await deposit?.detectFunding();
 			if (fundingUxtos) {
-				const arbTxHash = await deposit.initiateMinting(
+				const baseTxHash = await deposit.initiateMinting(
 					fundingUxtos[0],
 				);
-				dispatch(addArbTxHash(arbTxHash.toString()));
+				dispatch(addBaseTxHash(baseTxHash.toString()));
 			}
 		} catch (error) {
 			console.error('Error initiating minting:', error);
@@ -167,7 +167,7 @@ const Step3MintingProcess = ({ setStep }: Props) => {
 	useEffect(() => {
 		if (!deposit || !sdk) return;
 
-		if (deposit && !depositInfo.arbTxHash) {
+		if (deposit && !depositInfo.baseTxHash) {
 			initiateMinting(deposit);
 		}
 

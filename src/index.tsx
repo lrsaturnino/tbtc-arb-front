@@ -16,25 +16,25 @@ const projectId =
 // 2. Set chains
 
 const sepolia = {
-	chainId: 421614,
-	name: 'Arbitrum Sepolia',
+	chainId: 84532,
+	name: 'Base Sepolia',
 	currency: 'ETH',
-	explorerUrl: 'https://sepolia.etherscan.io/',
-	rpcUrl: 'https://arbitrum-sepolia.blockpi.network/v1/rpc/public',
+	explorerUrl: 'https://sepolia.basescan.org/',
+	rpcUrl: 'https://sepolia.base.org',
 };
 
-const arbitrum = {
-	chainId: 42161,
-	name: 'Arbitrum One',
+const mainnet = {
+	chainId: 8453,
+	name: 'Base Mainnet',
 	currency: 'ETH',
-	explorerUrl: 'https://arbiscan.io/',
-	rpcUrl: 'https://arb1.arbitrum.io/rpc',
+	explorerUrl: 'https://basescan.org',
+	rpcUrl: 'https://mainnet.base.org',
 };
 
 // 3. Create a metadata object
 const metadata = {
 	name: 'tBTC Minting Portal',
-	description: 'Bridge your Bitcoin and start earning in Arbitrum',
+	description: 'Bridge your Bitcoin and start earning in Base',
 	url: 'https://threshold.network/',
 	icons: [''],
 };
@@ -55,7 +55,7 @@ const ethersConfig = defaultConfig({
 // 5. Create a Web3Modal instance
 createWeb3Modal({
 	ethersConfig,
-	chains: [sepolia, arbitrum],
+	chains: [sepolia, mainnet],
 	projectId,
 	enableAnalytics: false, // Optional - defaults to your Cloud configuration
 });

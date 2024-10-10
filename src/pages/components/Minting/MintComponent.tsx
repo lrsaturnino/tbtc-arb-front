@@ -94,7 +94,7 @@ const MintComponent = ({
 			setDepositInstance(
 				await sdk.deposits.initiateCrossChainDeposit(
 					btcRecoveryAddress,
-					'Arbitrum',
+					'Base',
 				),
 			);
 

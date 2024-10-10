@@ -298,17 +298,17 @@ const getBtcBlockExplorerUrl = (isMainnet: boolean, txHash: string) => {
 };
 
 /**
- * @name getArbBlockExplorerUrl
+ * @name getBaseBlockExplorerUrl
  * @description Returns the block explorer URL for the Arbitrum network.
  * @param {boolean} isMainnet - Whether the network is mainnet or not.
  * @param {string} txHash - The transaction hash.
  * @returns The block explorer URL.
  */
 
-const getArbBlockExplorerUrl = (isMainnet: boolean, txHash: string) => {
+const getBaseBlockExplorerUrl = (isMainnet: boolean, txHash: string) => {
 	return isMainnet
-		? `${process.env.REACT_APP_ARB_EXPLORER_MAINNET}/tx/${txHash}`
-		: `${process.env.REACT_APP_ARB_EXPLORER_SEPOLIA}/tx/${txHash}`;
+		? `${process.env.REACT_APP_BASE_EXPLORER_MAINNET}/tx/${txHash}`
+		: `${process.env.REACT_APP_BASE_EXPLORER_SEPOLIA}/tx/${txHash}`;
 };
 
 /**
@@ -341,8 +341,8 @@ const getBlockExplorerUrl = (
 ) => {
 	if (blockExplorer === 'ETHERSCAN') {
 		return getEthBlockExplorerUrl(isMainnet, txHash);
-	} else if (blockExplorer === 'ARBISCAN') {
-		return getArbBlockExplorerUrl(isMainnet, txHash);
+	} else if (blockExplorer === 'BASESCAN') {
+		return getBaseBlockExplorerUrl(isMainnet, txHash);
 	} else {
 		return getBtcBlockExplorerUrl(isMainnet, txHash);
 	}

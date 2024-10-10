@@ -122,7 +122,7 @@ const ConfirmingMinting = ({ msg, step, setStep }: Props) => {
 							textAlign='center'
 						>
 							The tBTC has been minted on mainnet and it will be
-							bridged over to Arbitrum and sent to your wallet in
+							bridged over to Base and sent to your wallet in
 							a few minutes!
 						</Text>
 						<Text

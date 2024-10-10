@@ -66,7 +66,7 @@ const TimelineTemplate = ({ step, label, children, unmint }: Props) => {
 								fontWeight={500}
 								variant='purpleDarkGradient'
 							>
-								ACTION ON ARBITRUM
+								ACTION ON BASE
 							</Text>
 						</Box>
 						<Box

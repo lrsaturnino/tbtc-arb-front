@@ -63,7 +63,7 @@ interface LeaderboardComponentProps {
 }
 
 const ITEMS_PER_PAGE = 20;
-const arbscanBaseUrl = 'https://arbiscan.io';
+const basescanBaseUrl = 'https://sepolia.basescan.org/';
 
 /**
  *
@@ -180,7 +180,7 @@ const LeaderboardRow: React.FC<LeaderboardRowProps> = ({
 				<GridItem colSpan={2}>
 					<Tooltip label={reward.provider} fontSize='xs'>
 						<Link
-							href={`${arbscanBaseUrl}/address/${reward.provider}`}
+							href={`${basescanBaseUrl}/address/${reward.provider}`}
 							isExternal
 						>
 							<Flex alignItems='center' gap={2}>

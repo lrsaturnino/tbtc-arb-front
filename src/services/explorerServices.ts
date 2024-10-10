@@ -12,12 +12,12 @@ export const getEthTransactionUrl = (isMainnet: boolean, txHash: string) => {
 	return `${explorerUrl}/tx/${txHash}`;
 };
 
-export const getArbitrumTransactionUrl = (
+export const getBaseTransactionUrl = (
 	isMainnet: boolean,
 	txHash: string,
 ) => {
 	const explorerUrl = isMainnet
-		? process.env.REACT_APP_ARBITRUM_EXPLORER_MAINNET
-		: process.env.REACT_APP_ARBITRUM_EXPLORER_TESTNET;
+		? process.env.REACT_APP_BASE_EXPLORER_MAINNET
+		: process.env.REACT_APP_BASE_EXPLORER_TESTNET;
 	return `${explorerUrl}/tx/${txHash}`;
 };

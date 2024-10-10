@@ -236,13 +236,13 @@ const Step2ProvideDataComponent = ({ onClick }: Props) => {
 							fontSize='14px'
 							lineHeight='20px'
 						>
-							Arbitrum Address
+							Base Address
 						</Text>
 					</Box>
 					<Flex gap='9px'>
 						<Link
 							variant='grayPurple'
-							href={`${process.env.REACT_APP_ARB_EXPLORER}${address}`}
+							href={`${process.env.REACT_APP_BASE_EXPLORER}${address}`}
 							isExternal={true}
 						>
 							{formatAddress(address)}

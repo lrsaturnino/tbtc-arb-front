@@ -23,7 +23,7 @@ const checkDepositStatus = async (deposit: Deposit, sdk: TBTC) => {
 	);
 	// Get the deposit state from the cross-chain contracts
 	const depositState = await sdk
-		?.crossChainContracts('Arbitrum')
+		?.crossChainContracts('Base')
 		?.l1BitcoinDepositor.getDepositState(depositId);
 	return depositState;
 };
@@ -58,7 +58,7 @@ const getDepositInfo = async (receipt: DepositReceipt, sdk: TBTC) => {
 	};
 
 	// Get the cross-chain contracts from the SDK
-	const crossChainContracts = sdk.crossChainContracts('Arbitrum');
+	const crossChainContracts = sdk.crossChainContracts('Base');
 	if (!crossChainContracts) {
 		return;
 	}

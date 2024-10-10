@@ -47,7 +47,7 @@ const ConnectButton = (props: ButtonProps) => {
 	const [isMobile] = useMediaQuery('(max-width: 600px)');
 
 	const getNetworkName = (isMainnet: boolean): string => {
-		return isMainnet ? 'Arbitrum One' : 'Arbitrum Sepolia';
+		return isMainnet ? 'Base Mainnet' : 'Base Sepolia';
 	};
 
 	const arbitrumLogoColor = useColorModeValue(

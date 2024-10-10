@@ -9,7 +9,7 @@ import {
 	TBTC,
 } from '@keep-network/tbtc-v2.ts';
 import {
-	addArbTxHash,
+	addBaseTxHash,
 	addFinalizedEthTxHash,
 	addInitializedEthTxHash,
 	addStatus,
@@ -62,13 +62,13 @@ const getUrlHeader = (isMainnet: boolean, blockExplorer: string) => {
 	const etherscanApiExplorer = isMainnet
 		? process.env.REACT_APP_ETHERSCAN_API_URL_MAINNET
 		: process.env.REACT_APP_ETHERSCAN_API_URL_SEPOLIA;
-	const arbiscanApiExplorer = isMainnet
-		? process.env.REACT_APP_ARBISCAN_API_URL_MAINNET
-		: process.env.REACT_APP_ARBISCAN_API_URL_SEPOLIA;
+	const basescanApiExplorer = isMainnet
+		? process.env.REACT_APP_BASESCAN_API_URL_MAINNET
+		: process.env.REACT_APP_BASESCAN_API_URL_SEPOLIA;
 
 	return blockExplorer === 'ETHERSCAN'
 		? etherscanApiExplorer
-		: arbiscanApiExplorer;
+		: basescanApiExplorer;
 };
 
 /**
@@ -86,11 +86,11 @@ const getUrlTxHeader = (isMainnet: boolean, blockExplorer: string) => {
 	const etherscanExplorer = isMainnet
 		? process.env.REACT_APP_ETH_EXPLORER_MAINNET
 		: process.env.REACT_APP_ETH_EXPLORER_TESTNET;
-	const arbiscanExplorer = isMainnet
-		? process.env.REACT_APP_ARB_EXPLORER_MAINNET
-		: process.env.REACT_APP_ARB_EXPLORER_TESTNET;
+	const basescanExplorer = isMainnet
+		? process.env.REACT_APP_BASE_EXPLORER_MAINNET
+		: process.env.REACT_APP_BASE_EXPLORER_TESTNET;
 
-	return blockExplorer === 'ETHERSCAN' ? etherscanExplorer : arbiscanExplorer;
+	return blockExplorer === 'ETHERSCAN' ? etherscanExplorer : basescanExplorer;
 };
 
 /**
@@ -151,7 +151,7 @@ export const getWalletTransactions = async (
 	isMainnet: boolean,
 	address: string,
 ): Promise<Array<any>> => {
-	const arbitrumTransactions = await getTbtcTransactionsbyAddress(
+	const baseTransactions = await getTbtcTransactionsbyAddress(
 		isMainnet,
 		address,
 	);
@@ -159,7 +159,7 @@ export const getWalletTransactions = async (
 		isMainnet,
 		address,
 	);
-	let transactions = [...arbitrumTransactions, ...etherScanTransactions];
+	let transactions = [...baseTransactions, ...etherScanTransactions];
 	transactions = transactions.sort((a, b) => b.timeStamp - a.timeStamp);
 	transactions = transactions.slice(0, 8);
 	transactions.forEach(tx => {
@@ -210,11 +210,11 @@ export const checkTransactionExist = async (
 	fundingTx: any,
 	address: string,
 ) => {
-	const arbTransactions = await getArbTransactionsByAddress(
+	const baseTransactions = await getBaseTransactionsByAddress(
 		isMainnet,
 		address,
 	);
-	const { result } = arbTransactions.data;
+	const { result } = baseTransactions.data;
 
 	return result.find((transaction: any) => {
 		const decodedInput = decodeInputDataInitialize(transaction);
@@ -295,12 +295,12 @@ export const handleCrossChainTransactions = async (
 	isMainnet: boolean,
 	dispatch: Dispatch,
 ) => {
-	const arbitrumTx = await checkTransactionExist(
+	const baseTx = await checkTransactionExist(
 		isMainnet,
 		fundingTxVectors,
 		address,
 	);
-	if (arbitrumTx?.hash) dispatch(addArbTxHash(arbitrumTx.hash));
+	if (baseTx?.hash) dispatch(addBaseTxHash(baseTx.hash));
 
 	const initializedTx = await getInitializedTxHash(
 		isMainnet,
@@ -347,20 +347,20 @@ export const getFinalizedTxHash = async (
 };
 
 /**
- * @name getArbTransactionsByAddress
+ * @name getBaseTransactionsByAddress
  * @description Gets the Arbitrum transactions by address
  * @param isMainnet - The network status
  * @param address - The account address
  * @returns The Arbitrum transactions
  */
 
-const getArbTransactionsByAddress = async (
+const getBaseTransactionsByAddress = async (
 	isMainnet: boolean,
 	address: string,
 ) => {
-	const apiKey = process.env.REACT_APP_ARBISCAN_API_KEY;
+	const apiKey = process.env.REACT_APP_BASESCAN_API_KEY;
 	const contractAddress = getContractAddress(isMainnet, 'L2BITCOIN');
-	const urlHeader = getUrlHeader(isMainnet, 'ARBISCAN');
+	const urlHeader = getUrlHeader(isMainnet, 'BASESCAN');
 	const url = `${urlHeader}/api?module=account&action=txlist&contractaddress=${contractAddress}&address=${address}&page=1&offset=100&startblock=0&endblock=99999999&sort=asc&apikey=${apiKey}`;
 	const res = await axios.get(url);
 	return res;
@@ -379,13 +379,13 @@ export const getTbtcTransactionsbyAddress = async (
 	isMainnet: boolean,
 	address: string,
 ) => {
-	const apiKey = process.env.REACT_APP_ARBISCAN_API_KEY;
+	const apiKey = process.env.REACT_APP_BASESCAN_API_KEY;
 	const contractAddress = getContractAddress(isMainnet, 'TBTC');
-	const urlHeader = getUrlHeader(isMainnet, 'ARBISCAN');
+	const urlHeader = getUrlHeader(isMainnet, 'BASESCAN');
 	const url = `${urlHeader}/api?module=account&action=tokentx&contractaddress=${contractAddress}&address=${address}&page=1&offset=100&startblock=0&endblock=99999999&sort=asc&apikey=${apiKey}`;
 	try {
 		const res = await axios.get(url);
-		const urlTxHeader = getUrlTxHeader(isMainnet, 'ARBISCAN');
+		const urlTxHeader = getUrlTxHeader(isMainnet, 'BASESCAN');
 		const formatted = res.data.result.map((tx: any) => ({
 			value: parseFloat(ethers.utils.formatEther(tx.value)).toFixed(3),
 			hash: tx.hash,
@@ -414,15 +414,15 @@ export const getTbtcTransactions = async (
 	noLimit?: boolean,
 ): Promise<any[]> => {
 	const limit = noLimit ? 100 : 8;
-	const apiKey = process.env.REACT_APP_ARBISCAN_API_KEY;
+	const apiKey = process.env.REACT_APP_BASESCAN_API_KEY;
 	const contractAddress = getContractAddress(isMainnet, 'TBTC');
-	const urlHeader = getUrlHeader(isMainnet, 'ARBISCAN');
+	const urlHeader = getUrlHeader(isMainnet, 'BASESCAN');
 	const url = `${urlHeader}/api?module=account&action=tokentx&contractaddress=${contractAddress}&page=1&offset=100&startblock=0&endblock=99999999&sort=desc&apikey=${apiKey}`;
 	const {
 		data: { result },
 	} = await axios.get(url);
 
-	const urlTxHeader = getUrlTxHeader(isMainnet, 'ARBISCAN');
+	const urlTxHeader = getUrlTxHeader(isMainnet, 'BASESCAN');
 
 	return result
 		.map((tx: any) => ({
@@ -655,7 +655,7 @@ export const setDepositStatus = async (
 	const fundingTxHash = reverseString(transactionHash.toString());
 	const depositId = getDepositId(fundingTxHash, outputIndex);
 	const status = await sdk
-		.crossChainContracts('Arbitrum')
+		.crossChainContracts('Base')
 		?.l1BitcoinDepositor.getDepositState(depositId);
 	if (status) dispatch(addStatus(status));
 };

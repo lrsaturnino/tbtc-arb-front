@@ -6,7 +6,7 @@ import { useSdk } from '../../../../../context/SDKProvider';
 import { JsonData } from '../../../../../interfaces/JsonData.interface';
 import { useDispatch } from 'react-redux';
 import {
-	addArbTxHash,
+	addBaseTxHash,
 	addDeposit,
 	addFinalizedEthTxHash,
 	addInitializedEthTxHash,
@@ -67,7 +67,7 @@ const ResumeMintingProcess = ({ setTabSelected, setStep }: Props) => {
 					);
 					const depositId = getDepositId(fundingTxHash, outputIndex);
 					const status = await sdk
-						.crossChainContracts('Arbitrum')
+						.crossChainContracts('Base')
 						?.l1BitcoinDepositor.getDepositState(depositId);
 
 					if (status) {
@@ -82,12 +82,12 @@ const ResumeMintingProcess = ({ setTabSelected, setStep }: Props) => {
 					const fundingTxVectors =
 						extractBitcoinRawTxVectors(bitcoinRawTx);
 
-					const arbitrumTx = await checkTransactionExist(
+					const baseTx = await checkTransactionExist(
 						isMainnet,
 						fundingTxVectors,
 						address,
 					);
-					dispatch(addArbTxHash(arbitrumTx?.hash));
+					dispatch(addBaseTxHash(baseTx?.hash));
 					const initializedTx = await getInitializedTxHash(
 						isMainnet,
 						address,

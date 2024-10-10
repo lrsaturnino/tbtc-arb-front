@@ -28,7 +28,7 @@ const TransactionsInfoTransactionHistoryComponent = ({
 	const header =
 		blockExplorer === 'ETHERSCAN'
 			? 'Minting Initialized:'
-			: blockExplorer === 'ARBISCAN'
+			: blockExplorer === 'BASESCAN'
 			? 'Reveal:'
 			: 'BTC confirmation:';
 	return (

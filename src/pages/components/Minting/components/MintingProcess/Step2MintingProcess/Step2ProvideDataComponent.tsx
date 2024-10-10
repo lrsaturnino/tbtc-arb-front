@@ -167,7 +167,7 @@ const Step2ProvideDataComponent = ({ onClick, btcRecoveryAddress }: Props) => {
 							fontSize='14px'
 							lineHeight='20px'
 						>
-							Arbitrum Address
+							Base Address
 						</Text>
 					</Box>
 					<Flex gap='9px'>

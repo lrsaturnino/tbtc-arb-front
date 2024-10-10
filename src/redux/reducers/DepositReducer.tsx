@@ -7,7 +7,7 @@ interface DepositState {
 	btcDepositAddress: string | null;
 	ethAddress: string | null;
 	utxo?: BitcoinUtxo | null;
-	arbTxHash?: string | null;
+	baseTxHash?: string | null;
 	initializedEthTxHash?: string | null;
 	finalizedEthTxHash?: string | null;
 	status?: number | null;
@@ -19,7 +19,7 @@ const initialState: DepositState = {
 	btcDepositAddress: null,
 	ethAddress: null,
 	utxo: null,
-	arbTxHash: null,
+	baseTxHash: null,
 	initializedEthTxHash: null,
 	finalizedEthTxHash: null,
 	status: null,
@@ -86,13 +86,13 @@ export const depositSlice = createSlice({
 				};
 			},
 		},
-		addArbTxHash: {
+		addBaseTxHash: {
 			reducer: (state, action: PayloadAction<string>) => {
-				state.arbTxHash = action.payload;
+				state.baseTxHash = action.payload;
 			},
-			prepare: (arbTxHash: string) => {
+			prepare: (baseTxHash: string) => {
 				return {
-					payload: arbTxHash,
+					payload: baseTxHash,
 				};
 			},
 		},
@@ -124,7 +124,7 @@ export const {
 	addDeposit,
 	addUtxo,
 	addStatus,
-	addArbTxHash,
+	addBaseTxHash,
 	addInitializedEthTxHash,
 	addFinalizedEthTxHash,
 } = depositSlice.actions;
